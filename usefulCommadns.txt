@@ -1,0 +1,28 @@
+##### VENV #####
+
+# erstellen einer environment:
+
+mkdir projectFolder
+cd projectFolder
+
+python3 -m venv venv_projectFolder
+
+# Aktivieren einer environment:
+
+source venv_projectFolder/bin/activate
+
+# Deaktivieren einer environment:
+
+deactivate
+
+# Anzeigen der installierten packete:
+
+pip list
+
+# erstellen einer requirements liste:
+
+pip freeze > requirements.txt
+
+# installieren mit requirements liste:
+
+pip install -r requirements.txt
