@@ -76,7 +76,7 @@ def get_joined_img(inp_path_json, jpg_folder, uint8_folder, lut_bgr, blend_vals=
     inp_path_jpg = os.path.join(jpg_folder,frameid+".jpg")  
     inp_path_uint8 = os.path.join(uint8_folder,frameid+".png")
     im_jpg = cv2.imread(inp_path_jpg) #add intensity image as background
-    im_id_map = cv2.imread(inp_path_uint8,cv2.CV_LOAD_IMAGE_GRAYSCALE) #get semantic label map
+    im_id_map = cv2.imread(inp_path_uint8,cv2.IMREAD_GRAYSCALE) #get semantic label map
     im_id_col = np.zeros((im_id_map.shape[0], im_id_map.shape[1], 3), np.uint8)
     for c in range(3):
         im_id_col[:,:,c] = lut_bgr[c][im_id_map] #apply color coding
