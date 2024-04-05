@@ -93,7 +93,15 @@ def write_labels_to_file_append(labels, file_path):
         line = ' '.join(map(str, labels))
         file.write(line + '\n')
 """
+# writing labels to txt (darknet.labls)
+def write_labels_to_file_darknet(list, file_path):
+    with open(file_path, 'w') as file:
+        for index, item in enumerate(list):
+            file.write(str(item))
+            if index != len(list) - 1: # after last label no '\n'
+                file.write('\n')
 
+# writing lables to txt
 def write_multiple_labels_to_file(labels, file_path):
     with open(file_path, 'w') as file:
         for i, line_labels in enumerate(labels):
@@ -103,8 +111,8 @@ def write_multiple_labels_to_file(labels, file_path):
             else:
                 file.write(line)
 
-# converting format from railSem19 to darkNet
-def converting_bounding_boxes(current_bounding_box):
+# converting bounding box parameters form railSem19-format to darkNet-format
+def converting_bounding_boxes_parameters(current_bounding_box):
     print("current Box:", current_bounding_box)
     
     # first assumption: points of bounding_box is top-left and bottom-right
@@ -133,17 +141,46 @@ def converting_bounding_boxes(current_bounding_box):
     print("y:", y_centre)
     print("w:", w_rel)
     print("h:", h_rel)
+
     print("===========")
 
     print("writing number to .txt file")
     new_bounding_box = [current_label, x_centre, y_centre, w_rel, h_rel]
     return new_bounding_box
 
+# converting label from text to numbers
+def converting_label_text2numbers(label):
+    if label == "abc":
+        return 1
+    elif label == "klj":
+        return 2
+    elif label == "xyz":
+        return 3
+    elif label == "udf":
+        return 4
+    else:
+        return 0  # 0 --> no label fits
+
+# check and update label list
+def check_and_update_label_list(label, label_list):
+    if label in label_list:
+        return label_list.index(label)
+    else:
+        label_list.append(label)
+        return len(label_list) - 1
 
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
-    file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
-    json_content = read_json_file(file_path)
+    read_file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
+    write_folder_path = "darknets/"
+    txt_extension = ".txt"
+    darknet_filename = "darknet.labels"
+
+    write_darknet_path = write_folder_path + darknet_filename
+
+    json_content = read_json_file(read_file_path)
+
+    label_list = []
     
     # Extract required fields
     frame = json_content['frame']
@@ -181,22 +218,26 @@ if __name__ == "__main__":
 
     print("--------------- Convertion of label data: ---------------")
 
-    all_labels = []
+    all_labels_current_image = []
 
     # convertion of label-data
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
         print("current Label:", current_label)
+        check_and_update_label_list(current_label, label_list)
 
         current_bounding_box = bounding_box['boundingbox']
-        new_bounding_box = converting_bounding_boxes(current_bounding_box)
+        new_bounding_box = converting_bounding_boxes_parameters(current_bounding_box)
 
         # add to all_labels list
-        all_labels.append(new_bounding_box)
+        all_labels_current_image.append(new_bounding_box)
 
-    print(all_labels)
+    print(all_labels_current_image)
 
-    txt_extension = ".txt"
-    write_file_path = frame + txt_extension
+    write_file_path = write_folder_path + frame + txt_extension
 
-    write_multiple_labels_to_file(all_labels, write_file_path)
+    write_multiple_labels_to_file(all_labels_current_image, write_file_path)
+
+    print(label_list)
+    write_labels_to_file_darknet(label_list, write_darknet_path)
+
