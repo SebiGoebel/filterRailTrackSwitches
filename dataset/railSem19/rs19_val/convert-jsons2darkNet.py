@@ -76,28 +76,25 @@ person
 
 """
 
-#reading from json
+# reading from json
 def read_json_file(file_path):
-    """Read JSON file and return its content."""
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
 
-# writing to txt
-def write_labels_to_file(labels, file_path):
-    """Write labels to a text file."""
+# writing lables to txt
+"""def write_labels_to_file(labels, file_path):
     with open(file_path, 'w') as file:
         line = ' '.join(map(str, labels))
         file.write(line)
 
 def write_labels_to_file_append(labels, file_path):
-    """Write labels to a text file."""
     with open(file_path, 'a') as file:
         line = ' '.join(map(str, labels))
         file.write(line + '\n')
+"""
 
 def write_multiple_labels_to_file(labels, file_path):
-    """Write labels to a text file."""
     with open(file_path, 'w') as file:
         for i, line_labels in enumerate(labels):
             line = ' '.join(map(str, line_labels))
