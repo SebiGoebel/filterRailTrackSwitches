@@ -82,6 +82,12 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
+def write_numbers_to_file(numbers, file_path):
+    """Write numbers to a text file."""
+    with open(file_path, 'w') as file:
+        line = ' '.join(map(str, numbers))
+        file.write(line)
+
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
     file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
@@ -157,3 +163,11 @@ if __name__ == "__main__":
         print("h:", h_rel)
 
         print("===========")
+
+        print("writing number to .txt file")
+        new_bounding_box = [x_centre, y_centre, w_rel, h_rel]
+
+        txt_extension = ".txt"
+        write_file_path = frame + txt_extension
+
+        write_numbers_to_file(new_bounding_box, write_file_path)
