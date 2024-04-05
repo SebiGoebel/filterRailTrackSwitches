@@ -76,17 +76,35 @@ person
 
 """
 
+#reading from json
 def read_json_file(file_path):
     """Read JSON file and return its content."""
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
 
-def write_numbers_to_file(numbers, file_path):
-    """Write numbers to a text file."""
+# writing to txt
+def write_labels_to_file(labels, file_path):
+    """Write labels to a text file."""
     with open(file_path, 'w') as file:
-        line = ' '.join(map(str, numbers))
+        line = ' '.join(map(str, labels))
         file.write(line)
+
+def write_labels_to_file_append(labels, file_path):
+    """Write labels to a text file."""
+    with open(file_path, 'a') as file:
+        line = ' '.join(map(str, labels))
+        file.write(line + '\n')
+
+def write_multiple_labels_to_file(labels, file_path):
+    """Write labels to a text file."""
+    with open(file_path, 'w') as file:
+        for i, line_labels in enumerate(labels):
+            line = ' '.join(map(str, line_labels))
+            if i < len(labels) - 1:  # after last label no '\n'
+                file.write(line + '\n')
+            else:
+                file.write(line)
 
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
@@ -129,6 +147,8 @@ if __name__ == "__main__":
 
     print("--------------- Convertion of label data: ---------------")
 
+    all_labels = []
+
     # convertion of label-data
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
@@ -165,9 +185,14 @@ if __name__ == "__main__":
         print("===========")
 
         print("writing number to .txt file")
-        new_bounding_box = [x_centre, y_centre, w_rel, h_rel]
+        new_bounding_box = [current_label, x_centre, y_centre, w_rel, h_rel]
 
-        txt_extension = ".txt"
-        write_file_path = frame + txt_extension
+        # add to all_labels list
+        all_labels.append(new_bounding_box)
 
-        write_numbers_to_file(new_bounding_box, write_file_path)
+    print(all_labels)
+
+    txt_extension = ".txt"
+    write_file_path = frame + txt_extension
+
+    write_multiple_labels_to_file(all_labels, write_file_path)
