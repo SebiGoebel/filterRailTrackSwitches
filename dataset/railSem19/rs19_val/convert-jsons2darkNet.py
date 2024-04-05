@@ -103,6 +103,43 @@ def write_multiple_labels_to_file(labels, file_path):
             else:
                 file.write(line)
 
+# converting format from railSem19 to darkNet
+def converting_bounding_boxes(current_bounding_box):
+    print("current Box:", current_bounding_box)
+    
+    # first assumption: points of bounding_box is top-left and bottom-right
+    top_left_x = current_bounding_box[0]
+    top_left_y = current_bounding_box[1]
+    bottom_right_x = current_bounding_box[2]
+    bottom_right_y = current_bounding_box[3]
+    
+    print("-------------")
+    
+    print("top-left_x:", top_left_x)
+    print("top-left_y:", top_left_y)
+    print("bottom-right_x:", bottom_right_x)
+    print("bottom-right_y:", bottom_right_y)
+    
+    # calculating new parameters of bounding boxes
+    x_centre = (top_left_x + (bottom_right_x - top_left_x) / 2) / imgWidth
+    y_centre = (top_left_y + (bottom_right_y - top_left_y) / 2) / imgHeight
+    w_rel = (bottom_right_x - top_left_x) / imgWidth
+    h_rel = (bottom_right_y - top_left_y) / imgHeight
+    
+    print("-------------")
+    
+    print("label:", current_label)
+    print("x:", x_centre)
+    print("y:", y_centre)
+    print("w:", w_rel)
+    print("h:", h_rel)
+    print("===========")
+
+    print("writing number to .txt file")
+    new_bounding_box = [current_label, x_centre, y_centre, w_rel, h_rel]
+    return new_bounding_box
+
+
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
     file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
@@ -152,37 +189,7 @@ if __name__ == "__main__":
         print("current Label:", current_label)
 
         current_bounding_box = bounding_box['boundingbox']
-        print("current Box:", current_bounding_box)
-
-        # first assumption: points of bounding_box is top-left and bottom-right
-        top_left_x = current_bounding_box[0]
-        top_left_y = current_bounding_box[1]
-        bottom_right_x = current_bounding_box[2]
-        bottom_right_y = current_bounding_box[3]
-
-        print("-------------")
-        print("top-left_x:", top_left_x)
-        print("top-left_y:", top_left_y)
-        print("bottom-right_x:", bottom_right_x)
-        print("bottom-right_y:", bottom_right_y)
-
-        # finding midpoints
-        x_centre = (top_left_x + (bottom_right_x - top_left_x) / 2) / imgWidth
-        y_centre = (top_left_y + (bottom_right_y - top_left_y) / 2) / imgHeight
-        w_rel = (bottom_right_x - top_left_x) / imgWidth
-        h_rel = (bottom_right_y - top_left_y) / imgHeight
-
-        print("-------------")
-        print("label:", current_label)
-        print("x:", x_centre)
-        print("y:", y_centre)
-        print("w:", w_rel)
-        print("h:", h_rel)
-
-        print("===========")
-
-        print("writing number to .txt file")
-        new_bounding_box = [current_label, x_centre, y_centre, w_rel, h_rel]
+        new_bounding_box = converting_bounding_boxes(current_bounding_box)
 
         # add to all_labels list
         all_labels.append(new_bounding_box)
