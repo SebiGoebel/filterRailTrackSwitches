@@ -83,7 +83,8 @@ def read_json_file(file_path):
     return data
 
 if __name__ == "__main__":
-    file_path = input("Enter the path to the JSON file: ")
+    #file_path = input("Enter the path to the JSON file: ") # input in terminal
+    file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
     json_content = read_json_file(file_path)
     
     # Extract required fields
@@ -119,3 +120,40 @@ if __name__ == "__main__":
 
     # Print the total number of bounding boxes
     print(f"Total Bounding Boxes: {len(bounding_boxes_with_labels)}")
+
+    print("--------------- Convertion of label data: ---------------")
+
+    # convertion of label-data
+    for bounding_box in bounding_boxes_with_labels:
+        current_label = bounding_box['label']
+        print("current Label:", current_label)
+
+        current_bounding_box = bounding_box['boundingbox']
+        print("current Box:", current_bounding_box)
+
+        # first assumption: points of bounding_box is top-left and bottom-right
+        top_left_x = current_bounding_box[0]
+        top_left_y = current_bounding_box[1]
+        bottom_right_x = current_bounding_box[2]
+        bottom_right_y = current_bounding_box[3]
+
+        print("-------------")
+        print("top-left_x:", top_left_x)
+        print("top-left_y:", top_left_y)
+        print("bottom-right_x:", bottom_right_x)
+        print("bottom-right_y:", bottom_right_y)
+
+        # finding midpoints
+        x_centre = (top_left_x + (bottom_right_x - top_left_x) / 2) / imgWidth
+        y_centre = (top_left_y + (bottom_right_y - top_left_y) / 2) / imgHeight
+        w_rel = (bottom_right_x - top_left_x) / imgWidth
+        h_rel = (bottom_right_y - top_left_y) / imgHeight
+
+        print("-------------")
+        print("label:", current_label)
+        print("x:", x_centre)
+        print("y:", y_centre)
+        print("w:", w_rel)
+        print("h:", h_rel)
+
+        print("===========")
