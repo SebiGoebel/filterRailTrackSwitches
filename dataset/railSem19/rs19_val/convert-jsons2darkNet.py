@@ -82,17 +82,7 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
-# writing lables to txt
-"""def write_labels_to_file(labels, file_path):
-    with open(file_path, 'w') as file:
-        line = ' '.join(map(str, labels))
-        file.write(line)
-
-def write_labels_to_file_append(labels, file_path):
-    with open(file_path, 'a') as file:
-        line = ' '.join(map(str, labels))
-        file.write(line + '\n')
-"""
+# ---------------- writing lables to txt ----------------
 # writing labels to txt (darknet.labls)
 def write_labels_to_file_darknet(list, file_path):
     with open(file_path, 'w') as file:
@@ -110,6 +100,14 @@ def write_multiple_labels_to_file(labels, file_path):
                 file.write(line + '\n')
             else:
                 file.write(line)
+
+# check and update label list
+def check_and_update_label_list(label, label_list):
+    if label in label_list:
+        return label_list.index(label)
+    else:
+        label_list.append(label)
+        return len(label_list) - 1
 
 # converting bounding box parameters form railSem19-format to darkNet-format
 def converting_bounding_boxes_parameters(current_bounding_box):
@@ -145,7 +143,9 @@ def converting_bounding_boxes_parameters(current_bounding_box):
     print("===========")
 
     print("writing number to .txt file")
-    new_bounding_box = [current_label, x_centre, y_centre, w_rel, h_rel]
+    
+    label_number = check_and_update_label_list(current_label, label_list)
+    new_bounding_box = [label_number, x_centre, y_centre, w_rel, h_rel]
     return new_bounding_box
 
 # converting label from text to numbers
@@ -161,17 +161,9 @@ def converting_label_text2numbers(label):
     else:
         return 0  # 0 --> no label fits
 
-# check and update label list
-def check_and_update_label_list(label, label_list):
-    if label in label_list:
-        return label_list.index(label)
-    else:
-        label_list.append(label)
-        return len(label_list) - 1
-
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
-    read_file_path = "jsons/rs19_val/rs00000.json"               # hardcoded for rs00000.json
+    read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
     write_folder_path = "darknets/"
     txt_extension = ".txt"
     darknet_filename = "darknet.labels"
@@ -224,7 +216,6 @@ if __name__ == "__main__":
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
         print("current Label:", current_label)
-        check_and_update_label_list(current_label, label_list)
 
         current_bounding_box = bounding_box['boundingbox']
         new_bounding_box = converting_bounding_boxes_parameters(current_bounding_box)
