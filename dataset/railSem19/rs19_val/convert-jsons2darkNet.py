@@ -1,4 +1,5 @@
 import json
+import os
 
 """
 This script converts the label-format of RailSem19 into the label-format of DarkNet which is usually used by yolos.
@@ -229,3 +230,14 @@ if __name__ == "__main__":
     testNum = 0
     converting_single_json(read_folder_path, write_folder_path, darknet_filename, testNum)
 
+    print("==========================")
+
+    #print(os.listdir(read_folder_path))
+
+    for filename in os.listdir(read_folder_path):
+        file_path = os.path.join(read_folder_path, filename)
+        if os.path.isfile(file_path):
+            print(file_path)
+    
+
+    # umschreiben dass "file_path" von "converting_single_json()" funktion übernommen wird --> viel cleaner als ich das gemacht habe
