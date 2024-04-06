@@ -228,11 +228,11 @@ if __name__ == "__main__":
     label_list = []
 
     testNum = 0
-    converting_single_json(read_folder_path, write_folder_path, darknet_filename, testNum)
+    converting_single_json(read_folder_path, write_folder_path, darknet_filename, testNum) # --> umschriben dass es nicht durch die zahlen iteriert sondern durch die file_paths
 
     print("==========================")
 
-    #print(os.listdir(read_folder_path))
+    print(os.listdir(read_folder_path))
 
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
@@ -240,4 +240,4 @@ if __name__ == "__main__":
             print(file_path)
     
 
-    # umschreiben dass "file_path" von "converting_single_json()" funktion übernommen wird --> viel cleaner als ich das gemacht habe
+    # umschreiben dass "file_path" von "converting_single_json()" funktion übernommen wird --> viel cleaner als ich das gemacht habe 
