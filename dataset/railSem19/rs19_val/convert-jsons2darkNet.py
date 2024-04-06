@@ -110,37 +110,18 @@ def check_and_update_label_list(label, label_list):
         return len(label_list) - 1
 
 # converting bounding box parameters form railSem19-format to darkNet-format
-def converting_bounding_boxes_parameters(current_bounding_box):
-    print("current Box:", current_bounding_box)
-    
+def converting_bounding_boxes_parameters(current_label, current_bounding_box):
     # first assumption: points of bounding_box is top-left and bottom-right
     top_left_x = current_bounding_box[0]
     top_left_y = current_bounding_box[1]
     bottom_right_x = current_bounding_box[2]
     bottom_right_y = current_bounding_box[3]
     
-    print("-------------")
-    
-    print("top-left_x:", top_left_x)
-    print("top-left_y:", top_left_y)
-    print("bottom-right_x:", bottom_right_x)
-    print("bottom-right_y:", bottom_right_y)
-    
     # calculating new parameters of bounding boxes
     x_centre = (top_left_x + (bottom_right_x - top_left_x) / 2) / imgWidth
     y_centre = (top_left_y + (bottom_right_y - top_left_y) / 2) / imgHeight
     w_rel = (bottom_right_x - top_left_x) / imgWidth
     h_rel = (bottom_right_y - top_left_y) / imgHeight
-    
-    print("-------------")
-    
-    print("label:", current_label)
-    print("x:", x_centre)
-    print("y:", y_centre)
-    print("w:", w_rel)
-    print("h:", h_rel)
-
-    print("===========")
 
     print("writing number to .txt file")
     
@@ -218,7 +199,7 @@ if __name__ == "__main__":
         print("current Label:", current_label)
 
         current_bounding_box = bounding_box['boundingbox']
-        new_bounding_box = converting_bounding_boxes_parameters(current_bounding_box)
+        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box)
 
         # add to all_labels list
         all_labels_current_image.append(new_bounding_box)
