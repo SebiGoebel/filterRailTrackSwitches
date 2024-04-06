@@ -110,7 +110,7 @@ def check_and_update_label_list(label, label_list):
         return len(label_list) - 1
 
 # converting bounding box parameters form railSem19-format to darkNet-format
-def converting_bounding_boxes_parameters(current_label, current_bounding_box):
+def converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight):
     # first assumption: points of bounding_box is top-left and bottom-right
     top_left_x = current_bounding_box[0]
     top_left_y = current_bounding_box[1]
@@ -122,9 +122,8 @@ def converting_bounding_boxes_parameters(current_label, current_bounding_box):
     y_centre = (top_left_y + (bottom_right_y - top_left_y) / 2) / imgHeight
     w_rel = (bottom_right_x - top_left_x) / imgWidth
     h_rel = (bottom_right_y - top_left_y) / imgHeight
-
-    print("writing number to .txt file")
     
+    # writing numbers to .txt file
     label_number = check_and_update_label_list(current_label, label_list)
     new_bounding_box = [label_number, x_centre, y_centre, w_rel, h_rel]
     return new_bounding_box
@@ -142,24 +141,21 @@ def converting_label_text2numbers(label):
     else:
         return 0  # 0 --> no label fits
 
-if __name__ == "__main__":
-    #file_path = input("Enter the path to the JSON file: ") # input in terminal
-    read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
-    write_folder_path = "darknets/"
-    txt_extension = ".txt"
-    darknet_filename = "darknet.labels"
+def converting_single_json(read_folder_path, write_folder_path, darknet_filename, json_number):
+    # reading from single json file
+    json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
+    json_content = read_json_file(json_file_path)
 
-    write_darknet_path = write_folder_path + darknet_filename
-
-    json_content = read_json_file(read_file_path)
-
-    label_list = []
-    
     # Extract required fields
     frame = json_content['frame']
     imgHeight = json_content['imgHeight']
     imgWidth = json_content['imgWidth']
-    
+
+    # Print the extracted fields
+    print("frame:", frame)
+    print("imgHeight:", imgHeight)
+    print("imgWidth:", imgWidth)
+
     # Extract boundingbox and label from objects
     bounding_boxes_with_labels = []
     for obj in json_content['objects']:
@@ -167,12 +163,7 @@ if __name__ == "__main__":
             label = obj['label']
             bounding_box = obj['boundingbox']
             bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
-
-    # Print the extracted fields
-    print("frame:", frame)
-    print("imgHeight:", imgHeight)
-    print("imgWidth:", imgWidth)
-
+    
     print("--------------- Bounding Boxes with Labels: ---------------")
 
     for bounding_box in bounding_boxes_with_labels:
@@ -199,17 +190,41 @@ if __name__ == "__main__":
         print("current Label:", current_label)
 
         current_bounding_box = bounding_box['boundingbox']
-        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box)
+        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight)
 
         # add to all_labels list
         all_labels_current_image.append(new_bounding_box)
 
     print(all_labels_current_image)
 
-    write_file_path = write_folder_path + frame + txt_extension
-
+    # writing converted labels to .txt file
+    print("writing number to .txt file")
+    
+    write_file_path = write_folder_path + frame + ".txt"
     write_multiple_labels_to_file(all_labels_current_image, write_file_path)
 
     print(label_list)
+
+    # writing labels to darknet.label file
+    write_darknet_path = write_folder_path + darknet_filename
     write_labels_to_file_darknet(label_list, write_darknet_path)
+
+
+
+
+if __name__ == "__main__":
+    #file_path = input("Enter the path to the JSON file: ") # input in terminal
+    read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
+    #write_folder_path = "darknets/"
+    
+
+    json_content = read_json_file(read_file_path)
+
+    label_list = []
+
+    testNum = 0
+    test_read_Path = "jsons/rs19_val/"
+    test_write_folder_path = "darknets/"
+    test_darknet_filename = "darknet.labels"
+    converting_single_json(test_read_Path, test_write_folder_path, test_darknet_filename, testNum)
 
