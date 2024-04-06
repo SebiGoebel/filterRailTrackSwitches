@@ -214,17 +214,18 @@ def converting_single_json(read_folder_path, write_folder_path, darknet_filename
 
 if __name__ == "__main__":
     #file_path = input("Enter the path to the JSON file: ") # input in terminal
-    read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
-    #write_folder_path = "darknets/"
+    #read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
+
+    # paths for read and write folders and files
+    read_folder_path = "jsons/rs19_val/"
+    write_folder_path = "darknets/"
+    darknet_filename = "darknet.labels"
     
 
-    json_content = read_json_file(read_file_path)
+    #json_content = read_json_file(read_file_path)
 
     label_list = []
 
     testNum = 0
-    test_read_Path = "jsons/rs19_val/"
-    test_write_folder_path = "darknets/"
-    test_darknet_filename = "darknet.labels"
-    converting_single_json(test_read_Path, test_write_folder_path, test_darknet_filename, testNum)
+    converting_single_json(read_folder_path, write_folder_path, darknet_filename, testNum)
 
