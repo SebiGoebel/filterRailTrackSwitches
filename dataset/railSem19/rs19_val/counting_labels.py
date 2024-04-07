@@ -105,6 +105,7 @@ if __name__ == "__main__":
         file_path = os.path.join(read_folder_path, filename)
         if os.path.isfile(file_path):
             print(file_path)
+            #json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
             json_content = read_json_file(file_path)
         
             # Extract required fields
@@ -159,4 +160,3 @@ if __name__ == "__main__":
     print("switch_right_counter: ", switch_right_counter)
     print("buffer_stop_counter: ", buffer_stop_counter)
     print("error_counter: ", error_counter)
-
