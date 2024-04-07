@@ -142,9 +142,9 @@ def converting_label_text2numbers(label):
     else:
         return 0  # 0 --> no label fits
 
-def converting_single_json(read_folder_path, write_folder_path, darknet_filename, json_number):
+def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     # reading from single json file
-    json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
+    #json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
     json_content = read_json_file(json_file_path)
 
     # Extract required fields
@@ -221,23 +221,27 @@ if __name__ == "__main__":
     read_folder_path = "jsons/rs19_val/"
     write_folder_path = "darknets/"
     darknet_filename = "darknet.labels"
+    #txt_extension = ".txt"
     
 
     #json_content = read_json_file(read_file_path)
 
     label_list = []
 
-    testNum = 0
-    converting_single_json(read_folder_path, write_folder_path, darknet_filename, testNum) # --> umschriben dass es nicht durch die zahlen iteriert sondern durch die file_paths
-
     print("==========================")
 
-    print(os.listdir(read_folder_path))
+    #print(os.listdir(read_folder_path))
 
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
         if os.path.isfile(file_path):
             print(file_path)
-    
+            converting_single_json(file_path, write_folder_path, darknet_filename)
+            
+            # create new filenames
+            #name, extension = os.path.splitext(filename) # split filename and extention
+            #new_filename = name + txt_extension # set txt extention
+            #print(new_filename)
 
-    # umschreiben dass "file_path" von "converting_single_json()" funktion übernommen wird --> viel cleaner als ich das gemacht habe 
+    
+    # ACHUTUNG FEHLER!!! --> jeder durchlauf (jedes json) hat eine eigene bzw. neue darknet.label liste und überschreibt das darknet.labels file
