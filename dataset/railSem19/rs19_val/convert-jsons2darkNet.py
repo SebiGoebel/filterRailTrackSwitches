@@ -217,3 +217,4 @@ if __name__ == "__main__":
 
     
     # ACHUTUNG FEHLER!!! --> jeder durchlauf (jedes json) hat eine eigene bzw. neue darknet.label liste und überschreibt das darknet.labels file
+    # kein Fehler --> label Counter einbauen
