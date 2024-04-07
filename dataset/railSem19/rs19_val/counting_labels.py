@@ -85,8 +85,8 @@ def read_json_file(file_path):
 
 if __name__ == "__main__":
     # paths for read and write folders and files
-    #read_folder_path = "jsons/rs19_val/"
-    read_folder_path = "jsons/test/"
+    read_folder_path = "jsons/rs19_val/"
+    #read_folder_path = "jsons/test/"
 
     error_counter = 0
 
@@ -124,33 +124,39 @@ if __name__ == "__main__":
                 current_label = bounding_box['label']
                 print("current Label:", current_label)
 
-                track_sign_front_counter = 0
-                track_signal_front_counter = 0
-                track_signal_back_counter = 0
-                crossing_counter = 0
-                switch_unknown_counter = 0
-                switch_left_counter = 0
-                switch_indicator_counter = 0
-                switch_static_counter = 0
-                switch_right_counter = 0
-                buffer_stop_counter = 0
-
-
                 if current_label == "crossing":
                     crossing_counter += 1
-                elif current_label == "track_signal_front":
+                elif current_label == "track-signal-back":
+                    track_signal_back_counter += 1
+                elif current_label == "track-signal-front":
                     track_signal_front_counter +=1
                 elif current_label == "track-sign-front":
                     track_sign_front_counter += 1
                 elif current_label == "switch-unknown":
                     switch_unknown_counter += 1
+                elif current_label == "switch-left":
+                    switch_left_counter += 1
+                elif current_label == "switch-indicator":
+                    switch_indicator_counter += 1
+                elif current_label == "switch-static":
+                    switch_static_counter += 1
+                elif current_label == "switch-right":
+                    switch_right_counter += 1
+                elif current_label == "buffer-stop":
+                    buffer_stop_counter += 1
                 else:
                     error_counter += 1  # no label fits
-    
 
-
-    print("crossing_counter: ", crossing_counter)
+    print("==========================================================")
     print("track_sign_front_counter: ", track_sign_front_counter)
+    print("track_signal_front_counter: ", track_signal_front_counter)
+    print("track_signal_back_counter: ", track_signal_back_counter)
+    print("crossing_counter: ", crossing_counter)
     print("switch_unknown_counter: ", switch_unknown_counter)
+    print("switch_left_counter: ", switch_left_counter)
+    print("switch_indicator_counter: ", switch_indicator_counter)
+    print("switch_static_counter: ", switch_static_counter)
+    print("switch_right_counter: ", switch_right_counter)
+    print("buffer_stop_counter: ", buffer_stop_counter)
     print("error_counter: ", error_counter)
 
