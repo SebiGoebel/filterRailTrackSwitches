@@ -88,10 +88,18 @@ if __name__ == "__main__":
     #read_folder_path = "jsons/rs19_val/"
     read_folder_path = "jsons/test/"
 
-    crossing_counter = 0
-    track_sign_front_counter = 0
-    switch_unknown_counter = 0
     error_counter = 0
+
+    track_sign_front_counter = 0
+    track_signal_front_counter = 0
+    track_signal_back_counter = 0
+    crossing_counter = 0
+    switch_unknown_counter = 0
+    switch_left_counter = 0
+    switch_indicator_counter = 0
+    switch_static_counter = 0
+    switch_right_counter = 0
+    buffer_stop_counter = 0
 
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
@@ -116,8 +124,22 @@ if __name__ == "__main__":
                 current_label = bounding_box['label']
                 print("current Label:", current_label)
 
+                track_sign_front_counter = 0
+                track_signal_front_counter = 0
+                track_signal_back_counter = 0
+                crossing_counter = 0
+                switch_unknown_counter = 0
+                switch_left_counter = 0
+                switch_indicator_counter = 0
+                switch_static_counter = 0
+                switch_right_counter = 0
+                buffer_stop_counter = 0
+
+
                 if current_label == "crossing":
                     crossing_counter += 1
+                elif current_label == "track_signal_front":
+                    track_signal_front_counter +=1
                 elif current_label == "track-sign-front":
                     track_sign_front_counter += 1
                 elif current_label == "switch-unknown":
@@ -125,6 +147,8 @@ if __name__ == "__main__":
                 else:
                     error_counter += 1  # no label fits
     
+
+
     print("crossing_counter: ", crossing_counter)
     print("track_sign_front_counter: ", track_sign_front_counter)
     print("switch_unknown_counter: ", switch_unknown_counter)
