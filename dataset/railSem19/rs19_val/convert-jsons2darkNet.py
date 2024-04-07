@@ -130,7 +130,7 @@ def converting_bounding_boxes_parameters(current_label, current_bounding_box, im
     return new_bounding_box
 
 # converting label from text to numbers
-def converting_label_text2numbers(label):
+def counting_labels(label):
     if label == "abc":
         return 1
     elif label == "klj":
@@ -152,11 +152,6 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     imgHeight = json_content['imgHeight']
     imgWidth = json_content['imgWidth']
 
-    # Print the extracted fields
-    print("frame:", frame)
-    print("imgHeight:", imgHeight)
-    print("imgWidth:", imgWidth)
-
     # Extract boundingbox and label from objects
     bounding_boxes_with_labels = []
     for obj in json_content['objects']:
@@ -164,24 +159,8 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
             label = obj['label']
             bounding_box = obj['boundingbox']
             bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
-    
-    print("--------------- Bounding Boxes with Labels: ---------------")
-
-    for bounding_box in bounding_boxes_with_labels:
-        print("Label:", bounding_box['label'])
-        print("Bounding Box:", bounding_box['boundingbox'])
-
-    print("--------------- Bounding Boxes with Labels with counter: ---------------")
-
-    for i, bounding_box in enumerate(bounding_boxes_with_labels, start=1):
-        print(f"Bounding Box {i}:")
-        print("Label:", bounding_box['label'])
-        print("Bounding Box:", bounding_box['boundingbox'])
-
-    # Print the total number of bounding boxes
-    print(f"Total Bounding Boxes: {len(bounding_boxes_with_labels)}")
-
-    print("--------------- Convertion of label data: ---------------")
+            
+    print("converting label data of frame: ", frame)
 
     all_labels_current_image = []
 
@@ -199,8 +178,6 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     print(all_labels_current_image)
 
     # writing converted labels to .txt file
-    print("writing number to .txt file")
-    
     write_file_path = write_folder_path + frame + ".txt"
     write_multiple_labels_to_file(all_labels_current_image, write_file_path)
 
@@ -218,19 +195,14 @@ if __name__ == "__main__":
     #read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
 
     # paths for read and write folders and files
-    read_folder_path = "jsons/rs19_val/"
+    #read_folder_path = "jsons/rs19_val/"
+    read_folder_path = "jsons/test/"
     write_folder_path = "darknets/"
     darknet_filename = "darknet.labels"
-    #txt_extension = ".txt"
-    
 
     #json_content = read_json_file(read_file_path)
 
     label_list = []
-
-    print("==========================")
-
-    #print(os.listdir(read_folder_path))
 
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
