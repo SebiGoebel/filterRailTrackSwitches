@@ -4,3 +4,5 @@ jsons/
 uint8/
 venv*
 darknets/
+yolov9/
+weights/
