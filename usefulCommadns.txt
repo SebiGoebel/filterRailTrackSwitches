@@ -5,11 +5,12 @@
 mkdir projectFolder
 cd projectFolder
 
-python3 -m venv venv_projectFolder
+python3 -m venv venv_<projectFolder>
 
 # Aktivieren einer environment:
 
-source venv_projectFolder/bin/activate
+cd <projectFolder>
+source venv_<projectFolder>/bin/activate
 
 # Deaktivieren einer environment:
 
@@ -21,6 +22,7 @@ pip list
 
 # erstellen einer requirements liste:
 
+cd <projectFolder>
 pip freeze > requirements.txt
 
 # installieren mit requirements liste:
