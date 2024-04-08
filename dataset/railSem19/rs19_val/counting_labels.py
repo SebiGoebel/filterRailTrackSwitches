@@ -88,8 +88,8 @@ if __name__ == "__main__":
     read_folder_path = "jsons/rs19_val/"
     #read_folder_path = "jsons/test/"
 
+    # counters for each label
     error_counter = 0
-
     track_sign_front_counter = 0
     track_signal_front_counter = 0
     track_signal_back_counter = 0
@@ -101,16 +101,12 @@ if __name__ == "__main__":
     switch_right_counter = 0
     buffer_stop_counter = 0
 
+    # iterate through whole folder
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
         if os.path.isfile(file_path):
             print(file_path)
-            #json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
             json_content = read_json_file(file_path)
-        
-            # Extract required fields
-            frame = json_content['frame']
-            print("frame: ", frame)
 
             # Extract boundingbox and label from objects
             bounding_boxes_with_labels = []
@@ -120,10 +116,9 @@ if __name__ == "__main__":
                     bounding_box = obj['boundingbox']
                     bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
 
-            # convertion of label-data
+            # increase corresponding counter for each label
             for bounding_box in bounding_boxes_with_labels:
                 current_label = bounding_box['label']
-                print("current Label:", current_label)
 
                 if current_label == "crossing":
                     crossing_counter += 1
