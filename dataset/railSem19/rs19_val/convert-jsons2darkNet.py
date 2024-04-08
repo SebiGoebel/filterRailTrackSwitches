@@ -77,8 +77,8 @@ person
 
 """
 
+# counters for each label
 error_counter = 0
-
 track_sign_front_counter = 0
 track_signal_front_counter = 0
 track_signal_back_counter = 0
@@ -96,7 +96,6 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
-# ---------------- writing lables to txt ----------------
 # writing labels to txt (darknet.labls)
 def write_labels_to_file_darknet(list, file_path):
     with open(file_path, 'w') as file:
@@ -105,7 +104,7 @@ def write_labels_to_file_darknet(list, file_path):
             if index != len(list) - 1: # after last label no '\n'
                 file.write('\n')
 
-# writing lables to txt
+# writing lables to txt (frame.txt)
 def write_multiple_labels_to_file(labels, file_path):
     with open(file_path, 'w') as file:
         for i, line_labels in enumerate(labels):
@@ -138,11 +137,11 @@ def converting_bounding_boxes_parameters(current_label, current_bounding_box, im
     h_rel = (bottom_right_y - top_left_y) / imgHeight
     
     # writing numbers to .txt file
-    label_number = check_and_update_label_list(current_label, label_list)
+    label_number = check_and_update_label_list(current_label, label_list) # converting label from string to number
     new_bounding_box = [label_number, x_centre, y_centre, w_rel, h_rel]
     return new_bounding_box
 
-# converting label from text to numbers
+# increasing check-counters for each label
 def counting_labels(label):
     if label == "crossing":
         global crossing_counter
@@ -175,6 +174,7 @@ def counting_labels(label):
         global buffer_stop_counter
         buffer_stop_counter += 1
     else:
+        global error_counter
         error_counter += 1  # no label fits
 
 def converting_single_json(json_file_path, write_folder_path, darknet_filename):
@@ -182,10 +182,12 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     #json_file_path = read_folder_path + "rs" + str(json_number).zfill(5) + ".json"
     json_content = read_json_file(json_file_path)
 
-    # Extract required fields
+    # Extract required parameters
     frame = json_content['frame']
     imgHeight = json_content['imgHeight']
     imgWidth = json_content['imgWidth']
+
+    print("converting label data of frame: ", frame)
 
     # Extract boundingbox and label from objects
     bounding_boxes_with_labels = []
@@ -194,66 +196,39 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
             label = obj['label']
             bounding_box = obj['boundingbox']
             bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
-            
-    print("converting label data of frame: ", frame)
 
     all_labels_current_image = []
 
     # convertion of label-data
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
-        print("current Label:", current_label)
-        counting_labels(current_label)
-
         current_bounding_box = bounding_box['boundingbox']
-        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight)
-
-        # add to all_labels list
-        all_labels_current_image.append(new_bounding_box)
-
-    print(all_labels_current_image)
+        counting_labels(current_label)                                                                                    # counting labels for control purposes
+        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight) # converting parameters
+        all_labels_current_image.append(new_bounding_box)                                                                 # add parameters [label_number, x_centre, y_centre, width, height] to all_labels list
 
     # writing converted labels to .txt file
     write_file_path = write_folder_path + frame + ".txt"
     write_multiple_labels_to_file(all_labels_current_image, write_file_path)
 
-    print(label_list)
-
     # writing labels to darknet.label file
     write_darknet_path = write_folder_path + darknet_filename
     write_labels_to_file_darknet(label_list, write_darknet_path)
 
-
-
-
 if __name__ == "__main__":
-    #file_path = input("Enter the path to the JSON file: ") # input in terminal
-    #read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
-
     # paths for read and write folders and files
     read_folder_path = "jsons/rs19_val/"
     #read_folder_path = "jsons/test/"
     write_folder_path = "darknets/"
     darknet_filename = "darknet.labels"
 
-    #json_content = read_json_file(read_file_path)
+    label_list = [] # for all different labels -> darknet.label
 
-    label_list = []
-
+    # iterate through whole folder
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
         if os.path.isfile(file_path):
-            print(file_path)
             converting_single_json(file_path, write_folder_path, darknet_filename)
-            
-            # create new filenames
-            #name, extension = os.path.splitext(filename) # split filename and extention
-            #new_filename = name + txt_extension # set txt extention
-            #print(new_filename)
-
-    
-    # ACHUTUNG FEHLER!!! --> jeder durchlauf (jedes json) hat eine eigene bzw. neue darknet.label liste und überschreibt das darknet.labels file
-    # kein Fehler --> label Counter einbauen
 
     print("==========================================================")
     print("track_sign_front_counter: ", track_sign_front_counter)
