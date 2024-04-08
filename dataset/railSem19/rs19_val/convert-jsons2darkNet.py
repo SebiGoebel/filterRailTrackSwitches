@@ -77,6 +77,19 @@ person
 
 """
 
+error_counter = 0
+
+track_sign_front_counter = 0
+track_signal_front_counter = 0
+track_signal_back_counter = 0
+crossing_counter = 0
+switch_unknown_counter = 0
+switch_left_counter = 0
+switch_indicator_counter = 0
+switch_static_counter = 0
+switch_right_counter = 0
+buffer_stop_counter = 0
+
 # reading from json
 def read_json_file(file_path):
     with open(file_path, 'r') as file:
@@ -131,16 +144,38 @@ def converting_bounding_boxes_parameters(current_label, current_bounding_box, im
 
 # converting label from text to numbers
 def counting_labels(label):
-    if label == "abc":
-        return 1
-    elif label == "klj":
-        return 2
-    elif label == "xyz":
-        return 3
-    elif label == "udf":
-        return 4
+    if label == "crossing":
+        global crossing_counter
+        crossing_counter += 1
+    elif label == "track-signal-back":
+        global track_signal_back_counter
+        track_signal_back_counter += 1
+    elif label == "track-signal-front":
+        global track_signal_front_counter
+        track_signal_front_counter +=1
+    elif label == "track-sign-front":
+        global track_sign_front_counter
+        track_sign_front_counter += 1
+    elif label == "switch-unknown":
+        global switch_unknown_counter
+        switch_unknown_counter += 1
+    elif label == "switch-left":
+        global switch_left_counter
+        switch_left_counter += 1
+    elif label == "switch-indicator":
+        global switch_indicator_counter
+        switch_indicator_counter += 1
+    elif label == "switch-static":
+        global switch_static_counter
+        switch_static_counter += 1
+    elif label == "switch-right":
+        global switch_right_counter
+        switch_right_counter += 1
+    elif label == "buffer-stop":
+        global buffer_stop_counter
+        buffer_stop_counter += 1
     else:
-        return 0  # 0 --> no label fits
+        error_counter += 1  # no label fits
 
 def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     # reading from single json file
@@ -168,6 +203,7 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
         print("current Label:", current_label)
+        counting_labels(current_label)
 
         current_bounding_box = bounding_box['boundingbox']
         new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight)
@@ -195,8 +231,8 @@ if __name__ == "__main__":
     #read_file_path = "jsons/rs19_val/rs00000.json"          # hardcoded for rs00000.json
 
     # paths for read and write folders and files
-    #read_folder_path = "jsons/rs19_val/"
-    read_folder_path = "jsons/test/"
+    read_folder_path = "jsons/rs19_val/"
+    #read_folder_path = "jsons/test/"
     write_folder_path = "darknets/"
     darknet_filename = "darknet.labels"
 
@@ -218,3 +254,16 @@ if __name__ == "__main__":
     
     # ACHUTUNG FEHLER!!! --> jeder durchlauf (jedes json) hat eine eigene bzw. neue darknet.label liste und überschreibt das darknet.labels file
     # kein Fehler --> label Counter einbauen
+
+    print("==========================================================")
+    print("track_sign_front_counter: ", track_sign_front_counter)
+    print("track_signal_front_counter: ", track_signal_front_counter)
+    print("track_signal_back_counter: ", track_signal_back_counter)
+    print("crossing_counter: ", crossing_counter)
+    print("switch_unknown_counter: ", switch_unknown_counter)
+    print("switch_left_counter: ", switch_left_counter)
+    print("switch_indicator_counter: ", switch_indicator_counter)
+    print("switch_static_counter: ", switch_static_counter)
+    print("switch_right_counter: ", switch_right_counter)
+    print("buffer_stop_counter: ", buffer_stop_counter)
+    print("error_counter: ", error_counter)
