@@ -32,3 +32,7 @@ pip install -r requirements.txt#
 # installieren von jupyter kernel (braucht man für jupyter_notebook.ipynb)
 
 pip install ipykernel
+
+# making executable out of shell script
+
+chmod u+x <shellScript.sh>

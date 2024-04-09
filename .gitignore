@@ -7,6 +7,5 @@ darknets/
 yolov9/
 weights/
 beforeSplit/
-beforeSplitTxt/
 rs19_split8500/
 label_txts/
