@@ -6,3 +6,4 @@ venv*
 darknets/
 yolov9/
 weights/
+beforeSplit/
