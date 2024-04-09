@@ -27,4 +27,8 @@ pip freeze > requirements.txt
 
 # installieren mit requirements liste:
 
-pip install -r requirements.txt
+pip install -r requirements.txt#
+
+# installieren von jupyter kernel (braucht man für jupyter_notebook.ipynb)
+
+pip install ipykernel
