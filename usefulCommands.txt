@@ -36,3 +36,9 @@ pip install ipykernel
 # making executable out of shell script
 
 chmod u+x <shellScript.sh>
+
+# wenn in 2 venvs:
+
+deactivate
+deactivate
+source ~/.bashrc
