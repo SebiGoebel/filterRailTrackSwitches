@@ -42,3 +42,7 @@ chmod u+x <shellScript.sh>
 deactivate
 deactivate
 source ~/.bashrc
+
+# unzip folder:
+
+unzip file.zip -d <destination_folder>
