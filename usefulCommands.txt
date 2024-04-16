@@ -61,14 +61,14 @@ https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-tran
 scp /pfad/zur/deinedatei benutzername@remoteserver:/zielverzeichnis
 
 Beispiel:
-scp file.txt sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/Ordner
+scp file.txt sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
 
 # ordner kopieren - von local host zu remote server
 
-scp -r /pfad/zum/deinem/ordner benutzername@remoteserver:/zielverzeichnis
+scp -r pfad/zum/deinem/ordner/ benutzername@remoteserver:/zielverzeichnis
 
 Beispiel:
-scp -r /ordner sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
+scp -r ordner/ sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
 
 # nachscahuen in welchen verzeichnis man ist
 
