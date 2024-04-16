@@ -70,6 +70,6 @@ scp -r pfad/zum/deinem/ordner/ benutzername@remoteserver:/zielverzeichnis
 Beispiel:
 scp -r ordner/ sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
 
-# nachscahuen in welchen verzeichnis man ist
+# nachschauen in welchen verzeichnis man ist
 
 pwd
