@@ -46,3 +46,30 @@ source ~/.bashrc
 # unzip folder:
 
 unzip file.zip -d <destination_folder>
+
+# verbinden mit dem server
+
+1. verbinden mit vpn über openVPN
+2. verbinden mit server:
+    ssh sgoebel@eda01.ict.tuwien.ac.at
+    yes
+    passwort eingeben
+
+# file kopieren - von local host zu remote server
+https://www.freecodecamp.org/news/scp-linux-command-example-how-to-ssh-file-transfer-from-remote-to-local/
+
+scp /pfad/zur/deinedatei benutzername@remoteserver:/zielverzeichnis
+
+Beispiel:
+scp file.txt sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/Ordner
+
+# ordner kopieren - von local host zu remote server
+
+scp -r /pfad/zum/deinem/ordner benutzername@remoteserver:/zielverzeichnis
+
+Beispiel:
+scp -r /ordner sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
+
+# nachscahuen in welchen verzeichnis man ist
+
+pwd
