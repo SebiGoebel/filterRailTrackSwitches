@@ -90,16 +90,19 @@ if __name__ == "__main__":
 
     # counters for each label
     error_counter = 0
-    track_sign_front_counter = 0
-    track_signal_front_counter = 0
-    track_signal_back_counter = 0
-    crossing_counter = 0
+    frames_with_switches_counter = 0
     switch_unknown_counter = 0
     switch_left_counter = 0
     switch_indicator_counter = 0
     switch_static_counter = 0
     switch_right_counter = 0
-    buffer_stop_counter = 0
+
+    # unused label counters
+    #track_sign_front_counter = 0
+    #track_signal_front_counter = 0
+    #track_signal_back_counter = 0
+    #crossing_counter = 0
+    #buffer_stop_counter = 0
 
     # iterate through whole folder
     for filename in os.listdir(read_folder_path):
@@ -107,6 +110,8 @@ if __name__ == "__main__":
         if os.path.isfile(file_path):
             print(file_path)
             json_content = read_json_file(file_path)
+
+            checker = False
 
             # Extract boundingbox and label from objects
             bounding_boxes_with_labels = []
@@ -120,15 +125,7 @@ if __name__ == "__main__":
             for bounding_box in bounding_boxes_with_labels:
                 current_label = bounding_box['label']
 
-                if current_label == "crossing":
-                    crossing_counter += 1
-                elif current_label == "track-signal-back":
-                    track_signal_back_counter += 1
-                elif current_label == "track-signal-front":
-                    track_signal_front_counter +=1
-                elif current_label == "track-sign-front":
-                    track_sign_front_counter += 1
-                elif current_label == "switch-unknown":
+                if current_label == "switch-unknown":
                     switch_unknown_counter += 1
                 elif current_label == "switch-left":
                     switch_left_counter += 1
@@ -138,20 +135,19 @@ if __name__ == "__main__":
                     switch_static_counter += 1
                 elif current_label == "switch-right":
                     switch_right_counter += 1
-                elif current_label == "buffer-stop":
-                    buffer_stop_counter += 1
                 else:
                     error_counter += 1  # no label fits
 
+                if not checker and (current_label == "switch-unknown" or current_label == "switch-left" or current_label == "switch-right"):
+                    frames_with_switches_counter += 1
+                    checker = True
+                
+
     print("==========================================================")
-    print("track_sign_front_counter: ", track_sign_front_counter)
-    print("track_signal_front_counter: ", track_signal_front_counter)
-    print("track_signal_back_counter: ", track_signal_back_counter)
-    print("crossing_counter: ", crossing_counter)
+    print("frames_with_switches_counter: ", frames_with_switches_counter)
     print("switch_unknown_counter: ", switch_unknown_counter)
     print("switch_left_counter: ", switch_left_counter)
     print("switch_indicator_counter: ", switch_indicator_counter)
     print("switch_static_counter: ", switch_static_counter)
     print("switch_right_counter: ", switch_right_counter)
-    print("buffer_stop_counter: ", buffer_stop_counter)
     print("error_counter: ", error_counter)
