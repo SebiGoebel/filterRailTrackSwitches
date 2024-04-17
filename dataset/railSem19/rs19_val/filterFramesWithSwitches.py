@@ -83,10 +83,18 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
+# writing frames to txt (only_frames_with_switches.txt)
+def write_list_to_file(listOfFrames, filename):
+    with open(filename, 'w') as file:
+        for frame in listOfFrames:
+            file.write(frame + '\n')
+
 if __name__ == "__main__":
     # paths for read and write folders and files
-    read_folder_path = "jsons/rs19_val/"
-    #read_folder_path = "jsons/test/"
+    #read_folder_path = "jsons/rs19_val/"
+    read_folder_path = "jsons/test/"
+
+    write_frames_list_txt = "list_of_frames_containing_switches.txt"
 
     # counters for each label
     error_counter = 0
@@ -104,12 +112,17 @@ if __name__ == "__main__":
     #crossing_counter = 0
     #buffer_stop_counter = 0
 
+    listOnlyFramesWithSwitches = []
+
     # iterate through whole folder
     for filename in os.listdir(read_folder_path):
         file_path = os.path.join(read_folder_path, filename)
         if os.path.isfile(file_path):
             print(file_path)
             json_content = read_json_file(file_path)
+
+            # Extracting frame
+            frame = json_content['frame']
 
             checker = False
 
@@ -140,8 +153,15 @@ if __name__ == "__main__":
 
                 if not checker and (current_label == "switch-unknown" or current_label == "switch-left" or current_label == "switch-right"):
                     frames_with_switches_counter += 1
+                    listOnlyFramesWithSwitches.append(frame)
                     checker = True
                 
+    print("==========================================================")
+
+    print(listOnlyFramesWithSwitches)
+
+    print("writing frames to txt ...")
+    write_list_to_file(listOnlyFramesWithSwitches, write_frames_list_txt)
 
     print("==========================================================")
     print("frames_with_switches_counter: ", frames_with_switches_counter)
