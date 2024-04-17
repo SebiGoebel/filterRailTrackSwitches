@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 """
 This script converts the label-format of RailSem19 into the label-format of DarkNet which is usually used by yolos.
@@ -89,12 +90,32 @@ def write_list_to_file(listOfFrames, filename):
         for frame in listOfFrames:
             file.write(frame + '\n')
 
-if __name__ == "__main__":
-    # paths for read and write folders and files
-    #read_folder_path = "jsons/rs19_val/"
-    read_folder_path = "jsons/test/"
+# copy file from to
+def copy_file(quell_pfad, ziel_pfad):
+    json_file_path = read_jsons + "rs" + str(json_number).zfill(5) + ".json"
+    try:
+        shutil.copy(quell_pfad, ziel_pfad)
+        print(f"Datei von {quell_pfad} nach {ziel_pfad} kopiert.")
+    except IOError as e:
+        print(f"Fehler beim Kopieren der Datei: {e}")
+    except Exception as e:
+        print(f"Unerwarteter Fehler: {e}")
 
+if __name__ == "__main__":
+    # ---------- paths for read and write folders and files ----------
+    #jsons
+    #read_jsons = "jsons/rs19_val/"
+    read_jsons = "jsons/test/"
+    write_jsons = "jsons/onylFramesWithSwitches_jsons/"
+    #jpgs
+    read_jpgs = "jpgs/rs19_val/"
+    write_jpgs = "jpgs/onlyFramesWithSwitches_jpgs/"
+    #uint8
+    read_uint8 = "uint8/rs19_val/"
+    write_uint8 = "uint8/onlyFramesWithSwitches_uint8/"
+    #list of frames
     write_frames_list_txt = "list_of_frames_containing_switches.txt"
+    # ----------------------------------------------------------------
 
     # counters for each label
     error_counter = 0
@@ -115,8 +136,8 @@ if __name__ == "__main__":
     listOnlyFramesWithSwitches = []
 
     # iterate through whole folder
-    for filename in os.listdir(read_folder_path):
-        file_path = os.path.join(read_folder_path, filename)
+    for filename in os.listdir(read_jsons):
+        file_path = os.path.join(read_jsons, filename)
         if os.path.isfile(file_path):
             print(file_path)
             json_content = read_json_file(file_path)
