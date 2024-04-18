@@ -222,8 +222,8 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
 
 if __name__ == "__main__":
     # paths for read and write folders and files
-    #read_folder_path = "jsons/rs19_val/"
-    read_folder_path = "jsons/test/"
+    read_folder_path = "jsons/rs19_val/"
+    #read_folder_path = "jsons/test/"
     write_folder_path = "darknets/onlyFramesWithSwitches_darknets/"
     darknet_filename = "darknet.labels"
 
