@@ -1,11 +1,20 @@
+# zip folders
 zips/
+
+# railsem19 labels
 jpgs/
 jsons/
 uint8/
-venv*
 darknets/
+label_txts/
+
+# yolov9
 yolov9/
 weights/
+
+# all venvs
+venv*
+
+# all splits
 beforeSplit*
-rs19_split8500/
-label_txts/
+rs19_split*
