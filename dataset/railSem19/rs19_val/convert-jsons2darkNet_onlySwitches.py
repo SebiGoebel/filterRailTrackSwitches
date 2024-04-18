@@ -219,7 +219,7 @@ if __name__ == "__main__":
     # paths for read and write folders and files
     read_folder_path = "jsons/rs19_val/"
     #read_folder_path = "jsons/test/"
-    write_folder_path = "darknets/darknet_railsem19_all/"
+    write_folder_path = "darknets/onlyFramesWithSwitches_darknets/"
     darknet_filename = "darknet.labels"
 
     label_list = [] # for all different labels -> darknet.label
