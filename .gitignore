@@ -6,7 +6,6 @@ venv*
 darknets/
 yolov9/
 weights/
-beforeSplit/
-beforeSplit_onlySwitches/
+beforeSplit*
 rs19_split8500/
 label_txts/
