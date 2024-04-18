@@ -90,6 +90,8 @@ switch_static_counter = 0
 switch_right_counter = 0
 buffer_stop_counter = 0
 
+write_label_counter = 0
+
 # reading from json
 def read_json_file(file_path):
     with open(file_path, 'r') as file:
@@ -195,7 +197,10 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
         if 'boundingbox' in obj and 'label' in obj:
             label = obj['label']
             bounding_box = obj['boundingbox']
-            bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
+            if label == "switch-unknown" or label == "switch-left" or label == "switch-right":
+                global write_label_counter
+                write_label_counter += 1
+                bounding_boxes_with_labels.append({'label': label, 'boundingbox': bounding_box})
 
     all_labels_current_image = []
 
@@ -217,8 +222,8 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
 
 if __name__ == "__main__":
     # paths for read and write folders and files
-    read_folder_path = "jsons/rs19_val/"
-    #read_folder_path = "jsons/test/"
+    #read_folder_path = "jsons/rs19_val/"
+    read_folder_path = "jsons/test/"
     write_folder_path = "darknets/onlyFramesWithSwitches_darknets/"
     darknet_filename = "darknet.labels"
 
@@ -242,3 +247,5 @@ if __name__ == "__main__":
     print("switch_right_counter: ", switch_right_counter)
     print("buffer_stop_counter: ", buffer_stop_counter)
     print("error_counter: ", error_counter)
+    print("----------------------------------------------------------")
+    print("write_label_counter: ", write_label_counter)
