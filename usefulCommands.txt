@@ -73,3 +73,7 @@ scp -r ordner/ sgoebel@eda01.ict.tuwien.ac.at:/home/sgoebel/
 # nachschauen in welchen verzeichnis man ist
 
 pwd
+
+# check python version
+
+python --version
