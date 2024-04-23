@@ -77,3 +77,18 @@ pwd
 # check python version
 
 python --version
+
+# tmux sessions - für ein terminal das man schließne kann ohne es abzubrechen
+
+# starten einer tmux session
+tmux
+
+# öffnen der letzten tmux sesstion
+tmux a
+
+# rausgehen aus tmux session ohne sie zu schließen
+Strg + b --> d
+
+# schließen einer tmux session
+tmux a # enter tmux session
+exit
