@@ -5,7 +5,7 @@
 mkdir projectFolder
 cd projectFolder
 
-python3 -m venv venv_<projectFolder>
+python3.8 -m venv venv_<projectFolder>
 
 # Aktivieren einer environment:
 
