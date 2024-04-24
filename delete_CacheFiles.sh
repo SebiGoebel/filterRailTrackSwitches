@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# this skript deletes all labels.cache files in the dataset-split-directory
+# this is needed before training another model (e.g.: training yolov7 after the training of yolov9 created lables.cache files)
+
 # Array mit Dateipfade
 dateien=(
     "/home/sebi/filterRailTrackSwitches/dataset/railSem19/rs19_split8500/train/labels.cache"                 # rs19_split8500 train
