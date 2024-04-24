@@ -220,13 +220,14 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
     write_multiple_labels_to_file(all_labels_current_image, write_file_path)
 
     # writing labels to darknet.label file
-    write_darknet_path = write_folder_path + darknet_filename
-    write_labels_to_file_darknet(label_list, write_darknet_path)
+    if all_labels_current_image: # check if list is empty
+        write_darknet_path = write_folder_path + darknet_filename
+        write_labels_to_file_darknet(label_list, write_darknet_path)
 
 if __name__ == "__main__":
     # paths for read and write folders and files
-    #read_folder_path = "jsons/rs19_val/"
-    read_folder_path = "jsons/test/"
+    read_folder_path = "jsons/rs19_val/"
+    #read_folder_path = "jsons/test/"
     write_folder_path = "darknets/onlyFramesWithSwitchesLeftRight/"
     darknet_filename = "darknet.labels"
 
