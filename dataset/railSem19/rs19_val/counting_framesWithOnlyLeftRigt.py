@@ -97,6 +97,10 @@ if __name__ == "__main__":
     switch_static_counter = 0
     switch_right_counter = 0
 
+    extracted_switch_right_counter = 0
+    extracted_switch_left_counter = 0
+    extracted_error_counter = 0
+
     # unused label counters
     #track_sign_front_counter = 0
     #track_signal_front_counter = 0
@@ -111,7 +115,8 @@ if __name__ == "__main__":
             print(file_path)
             json_content = read_json_file(file_path)
 
-            checker = False
+            has_Switch = False
+            has_unknown = False
 
             # Extract boundingbox and label from objects
             bounding_boxes_with_labels = []
@@ -127,20 +132,31 @@ if __name__ == "__main__":
 
                 if current_label == "switch-unknown":
                     switch_unknown_counter += 1
+                    has_unknown = True
                 elif current_label == "switch-left":
                     switch_left_counter += 1
+                    has_Switch = True
                 elif current_label == "switch-indicator":
                     switch_indicator_counter += 1
                 elif current_label == "switch-static":
                     switch_static_counter += 1
                 elif current_label == "switch-right":
                     switch_right_counter += 1
+                    has_Switch = True
                 else:
                     error_counter += 1  # no label fits
 
-                if not checker and (current_label == "switch-unknown" or current_label == "switch-left" or current_label == "switch-right"):
-                    frames_with_switches_counter += 1
-                    checker = True
+            if has_Switch and not has_unknown:
+                frames_with_switches_counter += 1
+                for bounding_box in bounding_boxes_with_labels:
+                    current_label = bounding_box['label']
+                    if current_label == "switch-right":
+                        extracted_switch_right_counter += 1
+                    elif current_label == "switch-left":
+                        extracted_switch_left_counter += 1
+                    else:
+                        extracted_error_counter += 1
+
                 
 
     print("==========================================================")
@@ -151,3 +167,8 @@ if __name__ == "__main__":
     print("switch_static_counter: ", switch_static_counter)
     print("switch_right_counter: ", switch_right_counter)
     print("error_counter: ", error_counter)
+
+    print("----------------------------------------------------------")
+    print("extracted_switch_right_counter", extracted_switch_right_counter)
+    print("extracted_switch_left_counter", extracted_switch_left_counter)
+    print("extracted_error_counter", extracted_error_counter)

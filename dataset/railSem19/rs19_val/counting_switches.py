@@ -111,7 +111,7 @@ if __name__ == "__main__":
             print(file_path)
             json_content = read_json_file(file_path)
 
-            checker = False
+            has_switch = False
 
             # Extract boundingbox and label from objects
             bounding_boxes_with_labels = []
@@ -127,20 +127,22 @@ if __name__ == "__main__":
 
                 if current_label == "switch-unknown":
                     switch_unknown_counter += 1
+                    has_switch = True
                 elif current_label == "switch-left":
                     switch_left_counter += 1
+                    has_switch = True
                 elif current_label == "switch-indicator":
                     switch_indicator_counter += 1
                 elif current_label == "switch-static":
                     switch_static_counter += 1
                 elif current_label == "switch-right":
                     switch_right_counter += 1
+                    has_switch = True
                 else:
                     error_counter += 1  # no label fits
 
-                if not checker and (current_label == "switch-unknown" or current_label == "switch-left" or current_label == "switch-right"):
-                    frames_with_switches_counter += 1
-                    checker = True
+            if has_switch:
+                frames_with_switches_counter += 1
                 
 
     print("==========================================================")

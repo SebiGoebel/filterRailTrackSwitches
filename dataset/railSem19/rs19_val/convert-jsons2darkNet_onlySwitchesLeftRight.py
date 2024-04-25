@@ -204,16 +204,19 @@ def converting_single_json(json_file_path, write_folder_path, darknet_filename):
 
     all_labels_current_image = []
 
+    # filtering out frames that include "switch-unknown"-labels
+    for bounding_box in bounding_boxes_with_labels:
+        if bounding_box['label'] == "switch-unknown":
+            bounding_boxes_with_labels.clear()
+            break
+
     # convertion of label-data
     for bounding_box in bounding_boxes_with_labels:
         current_label = bounding_box['label']
-        if current_label == "switch-unknown": # filtering out frames that include "switch-unknown"-labels
-            all_labels_current_image.clear()
-        else:
-            current_bounding_box = bounding_box['boundingbox']
-            counting_labels(current_label)                                                                                    # counting labels for control purposes
-            new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight) # converting parameters
-            all_labels_current_image.append(new_bounding_box)                                                                 # add parameters [label_number, x_centre, y_centre, width, height] to all_labels list
+        current_bounding_box = bounding_box['boundingbox']
+        counting_labels(current_label)                                                                                    # counting labels for control purposes
+        new_bounding_box = converting_bounding_boxes_parameters(current_label, current_bounding_box, imgWidth, imgHeight) # converting parameters
+        all_labels_current_image.append(new_bounding_box)                                                                 # add parameters [label_number, x_centre, y_centre, width, height] to all_labels list
 
     # writing converted labels to .txt file
     write_file_path = write_folder_path + frame + ".txt"
