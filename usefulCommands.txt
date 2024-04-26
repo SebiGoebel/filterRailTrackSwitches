@@ -51,7 +51,7 @@ unzip file.zip -d <destination_folder>
 
 1. verbinden mit vpn über openVPN
 2. verbinden mit server:
-    ssh sgoebel@eda01.ict.tuwien.ac.at
+    ssh sgoebel@eda02.ict.tuwien.ac.at
     yes
     passwort eingeben
 
