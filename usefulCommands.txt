@@ -51,6 +51,18 @@ unzip file.zip -d <destination_folder>
 
 zip -r folder_name.zip folder_name
 
+# zip folder without compression:
+
+zip -0 -r folder_name.zip folder_name
+
+# abfrage wie groß ein ordner ist
+
+(-d --> tiefe des directories)
+du -h -d 0 <folder/file-names>
+
+# disk free command speicher abfragen
+df -h
+
 # verbinden mit dem server
 
 1. verbinden mit vpn über openVPN
