@@ -47,6 +47,10 @@ source ~/.bashrc
 
 unzip file.zip -d <destination_folder>
 
+# zip folder:
+
+zip -r folder_name.zip folder_name
+
 # verbinden mit dem server
 
 1. verbinden mit vpn über openVPN
