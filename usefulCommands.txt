@@ -108,3 +108,11 @@ Strg + b --> d
 # schließen einer tmux session
 tmux a # enter tmux session
 exit
+
+# selecting python interpreter
+
+1. activating python environment (venv)
+2. python whereInterpreter.py
+3. Strg + Shift + P
+4. Python: Select Interpreter
+5. copy + paste path of interpreter from whereInterpreter.py
