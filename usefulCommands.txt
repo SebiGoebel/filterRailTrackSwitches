@@ -116,3 +116,8 @@ exit
 3. Strg + Shift + P
 4. Python: Select Interpreter
 5. copy + paste path of interpreter from whereInterpreter.py
+
+# copying from eda02 to eda01
+
+rsync --exclude=**.venv --exclude=**venv* -r -vv objectDetection eda01.ict.tuwien.ac.at:~/
+rsync --exclude=**.venv --exclude=**venv* -r -vv rs19_val eda01.ict.tuwien.ac.at:/srv/cdl-eml/datasets/railsem19/
