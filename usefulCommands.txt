@@ -121,3 +121,8 @@ exit
 
 rsync --exclude=**.venv --exclude=**venv* -r -vv objectDetection eda01.ict.tuwien.ac.at:~/
 rsync --exclude=**.venv --exclude=**venv* -r -vv rs19_val eda01.ict.tuwien.ac.at:/srv/cdl-eml/datasets/railsem19/
+
+# killing processes (falls ein training nicht richtig stoppt und weiter läuft):
+
+ps -u -p <PID-Nummer> # PID-Nummer in nvidia-smi --> zum anschauen des Prozesses
+kill -9 <PID-Nummer> # --> zum killen des Prozesses
