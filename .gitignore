@@ -24,3 +24,6 @@ venv*
 beforeSplit*
 rs19_split*
 objectDetection/yoloV7/yolov7
+
+# images
+onlySwitchesLeftRightImages/
