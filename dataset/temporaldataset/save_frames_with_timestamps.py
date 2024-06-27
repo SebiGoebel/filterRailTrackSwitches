@@ -1,7 +1,7 @@
 import cv2
 import os
 
-def save_frames_from_video(timestamps_file, output_folder, frames_offset_forward=60, frames_offset_backward=30):
+def save_frames_from_video(timestamps_file, output_folder, frames_offset_forward=45, frames_offset_backward=30):
     # Create the output folder if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
