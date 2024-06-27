@@ -1,7 +1,7 @@
 import cv2
 import os
 
-def save_frames_from_video(timestamps_file, output_folder, frames_offset=75):
+def save_frames_from_video(timestamps_file, output_folder, frames_offset_forward=60, frames_offset_backward=30):
     # Create the output folder if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -25,7 +25,8 @@ def save_frames_from_video(timestamps_file, output_folder, frames_offset=75):
     frame_numbers_dict = {}
     for timestamp in timestamps:
         frame_number = int(timestamp * fps)
-        frame_numbers_dict[timestamp] = [frame_number + offset for offset in range(-frames_offset, frames_offset + 1)]
+        #frame_numbers_dict[timestamp] = [frame_number + offset for offset in range(-frames_offset, frames_offset + 1)]
+        frame_numbers_dict[timestamp] = [frame_number + offset for offset in range(-frames_offset_backward, frames_offset_forward + 1)]
     
     # Extract and save the frames
     frame_index = 0
