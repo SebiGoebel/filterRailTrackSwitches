@@ -1,6 +1,7 @@
 # zip folders
 zips/
 trainedModelsZips/
+tempData_Austria_Salzburg_Villach_jsons.zip
 
 # railsem19 labels
 jpgs/
@@ -32,3 +33,6 @@ tempData_Austria_Salzburg_Villach/
 #videos
 videos/
 Austria_Salzburg_Villach.mp4
+
+#label folders
+tempData_Austria_Salzburg_Villach_jsons/
