@@ -41,7 +41,10 @@ def process_folder(input_folder, output_file):
                     {"name": "left_rail", "parent": "", "attributes": []},
                     {"name": "right_rail", "parent": "", "attributes": []}
                 ],
-                "attributes": []
+                "attributes": ["occluded"]
+            },
+            "points": {
+                "items": []
             }
         },
         "items": []
@@ -49,57 +52,58 @@ def process_folder(input_folder, output_file):
     annotation_id = 0
     
     try:
-        # Sicherstellen, dass der Eingabeordner existiert
         if not os.path.exists(input_folder):
             print(f"Der Ordner '{input_folder}' wurde nicht gefunden.")
             return
         
-        # Durchlaufe alle Dateien im Eingabeordner
-        for filename in os.listdir(input_folder):
-            if filename.endswith(".json"):
-                file_path = os.path.join(input_folder, filename)
-                data = read_json(file_path)
-                if data:
-                    sequence_name = list(data.keys())[0]
-                    item = {
-                        "id": sequence_name,
-                        "annotations": []
-                    }
-                    
-                    left_rail_points = [coord for point in data[sequence_name]['left_rail'] for coord in point]
-                    right_rail_points = [coord for point in data[sequence_name]['right_rail'] for coord in point]
-                    
-                    item['annotations'].append({
-                        "id": annotation_id,
-                        "type": "polyline",
-                        "attributes": {},
-                        "group": 0,
-                        "label_id": 0,
-                        "points": left_rail_points,
-                        "z_order": 0
-                    })
-                    annotation_id += 1
-                    
-                    item['annotations'].append({
-                        "id": annotation_id,
-                        "type": "polyline",
-                        "attributes": {},
-                        "group": 1,
-                        "label_id": 1,
-                        "points": right_rail_points,
-                        "z_order": 0
-                    })
-                    annotation_id += 1
-                    
-                    combined_data['items'].append(item)
+        filenames = sorted([f for f in os.listdir(input_folder) if f.endswith(".json")])
         
-        # Sicherstellen, dass der Ausgabeordner existiert, falls nicht, erstellen
+        for filename in filenames:
+            file_path = os.path.join(input_folder, filename)
+            data = read_json(file_path)
+            if data:
+                sequence_name_with_ext = list(data.keys())[0]
+                sequence_name = os.path.splitext(sequence_name_with_ext)[0]  # Entfernen der Dateiendung
+                item = {
+                    "id": sequence_name,
+                    "annotations": []
+                }
+                
+                left_rail_points = [float(coord) for point in data[sequence_name_with_ext]['left_rail'] for coord in point]
+                right_rail_points = [float(coord) for point in data[sequence_name_with_ext]['right_rail'] for coord in point]
+                
+                item['annotations'].append({
+                    "id": annotation_id,
+                    "type": "polyline",
+                    "attributes": {"occluded": False},
+                    "group": 0,
+                    "label_id": 0,
+                    "points": left_rail_points,
+                    "z_order": 0
+                })
+                annotation_id += 1
+                
+                item['annotations'].append({
+                    "id": annotation_id,
+                    "type": "polyline",
+                    "attributes": {"occluded": False},
+                    "group": 0,
+                    "label_id": 1,
+                    "points": right_rail_points,
+                    "z_order": 0
+                })
+                annotation_id += 1
+                
+                item['attr'] = {"frame": annotation_id // 2}
+                item['point_cloud'] = {"path": ""}
+                
+                combined_data['items'].append(item)
+        
         output_folder = os.path.dirname(output_file)
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
             print(f"Ausgabeordner '{output_folder}' wurde erstellt.")
         
-        # JSON in die Ausgabedatei schreiben
         with open(output_file, 'w') as f:
             json.dump(combined_data, f, indent=4)
             print(f"Alle JSON-Daten wurden in die Datei '{output_file}' geschrieben.")
