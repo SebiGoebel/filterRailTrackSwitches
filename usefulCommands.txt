@@ -134,3 +134,13 @@ kill -9 <PID-Nummer> # --> zum killen des Prozesses
     ssh cdleml@ap237.ict.tuwien.ac.at -p 12022
     yes
     passwort eingeben
+
+
+
+# copying from eda02 to Nvidia Jetson
+
+1. auf den lokalen Rechner kopieren
+2. kopieren auf Nvidia Jetson:
+    scp -P 12022 -r 'C:\Users\Sebastian Goebel\Downloads\onnxs' cdleml@ap237.ict.tuwien.ac.at:/media/cdleml/512GB/Users/sgoebel/
+
+/usr/src/tensorrt/bin/trtexec
