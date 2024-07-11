@@ -126,3 +126,6 @@ rsync --exclude=**.venv --exclude=**venv* -r -vv rs19_val eda01.ict.tuwien.ac.at
 
 ps -u -p <PID-Nummer> # PID-Nummer in nvidia-smi --> zum anschauen des Prozesses
 kill -9 <PID-Nummer> # --> zum killen des Prozesses
+
+#Zugriff auf Nvidia Jetson
+ssh cdleml@ap237.ict.tuwien.ac.at -p 12022
