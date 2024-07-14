@@ -2,6 +2,7 @@
 zips/
 trainedModelsZips/
 tempData_Austria_Salzburg_Villach_jsons.zip
+temporalSwitchDataset.zip
 
 # railsem19 labels
 jpgs/
@@ -40,3 +41,5 @@ tempData_Austria_Salzburg_Villach_jsons_datareduction/
 annotations/
 tempData_CVAT/
 tempData_CVAT.zip
+temporalSwitchDataset_autolabeled_CVAT-structure/
+temporalSwitchDataset_DatumaroFormat/
