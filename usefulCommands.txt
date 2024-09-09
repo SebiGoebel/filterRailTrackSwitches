@@ -127,13 +127,20 @@ rsync --exclude=**.venv --exclude=**venv* -r -vv rs19_val eda01.ict.tuwien.ac.at
 ps -u -p <PID-Nummer> # PID-Nummer in nvidia-smi --> zum anschauen des Prozesses
 kill -9 <PID-Nummer> # --> zum killen des Prozesses
 
+# ------------------ Messen der Latenz ------------------
+
+# converting the model to an onnx-file
+# modelInfo.py also gives general infos of the model (Flops, MACs, Parameters)
+
+python modelInfo.py hardy-wildflower-52 data/egopath.jpg --device cuda:0
+
 # Zugriff auf Nvidia Jetson
 
 1. verbinden mit vpn über openVPN
 2. verbinden mit server:
     ssh cdleml@ap237.ict.tuwien.ac.at -p 12022
     yes
-    passwort eingeben
+    passwort eingeben (PC-Passwort, nicht TU Passwort)
 
 
 
