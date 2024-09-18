@@ -59,6 +59,6 @@ def save_frames_from_video(timestamps_file, output_folder, frames_offset_forward
     print("Done saving frames.")
 
 # Example usage
-timestamps_file = 'weichenSekunden_Austria_Salzburg_Villach.txt'
-output_folder = 'tempData_Austria_Salzburg_Villach'
+timestamps_file = 'weichenSekunden_tempOutput.txt'
+output_folder = 'tempData_outputSingleFrameBased'
 save_frames_from_video(timestamps_file, output_folder)
