@@ -31,6 +31,8 @@ objectDetection/yoloV7/yolov7
 # images
 onlySwitchesLeftRightImages/
 tempData_Austria_Salzburg_Villach/
+tempData_outputSingleFrameBased/
+tempData_outputSingleFrameBased_long/
 
 #videos
 videos/

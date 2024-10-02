@@ -2,9 +2,9 @@ import cv2
 import os
 
 # Pfade festlegen
-frames_folder = 'tempData_Austria_Salzburg_Villach'  # Ordner, in dem die Frames gespeichert sind
+frames_folder = 'tempData_outputSingleFrameBased_long'  # Ordner, in dem die Frames gespeichert sind
 output_folder = 'videos'  # Ordner, in dem das Video gespeichert werden soll
-output_filename = 'output_video.mp4'  # Name der Ausgabedatei
+output_filename = 'temporalDataset_video_singleFrameBasedModel_prediction_long.mp4'  # Name der Ausgabedatei
 
 # Erstellen des Ausgabeordners, falls nicht vorhanden
 if not os.path.exists(output_folder):

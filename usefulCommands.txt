@@ -130,9 +130,10 @@ kill -9 <PID-Nummer> # --> zum killen des Prozesses
 # ------------------ Messen der Latenz ------------------
 
 # converting the model to an onnx-file
-# modelInfo.py also gives general infos of the model (Flops, MACs, Parameters)
+# modelInfo.py/modelInfo_temporal.py also gives general infos of the model (Flops, MACs, Parameters)
 
 python modelInfo.py hardy-wildflower-52 data/egopath.jpg --device cuda:0
+python modelInfo_temporal.py vocal-wildflower-311 data/Video_1.mp4 --start 20 --end 22 --show-crop --device cuda:0
 
 # Zugriff auf Nvidia Jetson
 

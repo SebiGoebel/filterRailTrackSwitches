@@ -1,4 +1,4 @@
-videos/temporalDataset_video_singleFrameBasedModel_prediction.mp4
+videos/temporalDataset_video_singleFrameBasedModel_prediction_wholeVideo.mp4
 55
 76
 125
