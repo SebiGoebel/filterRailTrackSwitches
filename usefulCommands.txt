@@ -94,6 +94,7 @@ pwd
 
 python --version
 
+============================== TMUX ==============================
 # tmux sessions - für ein terminal das man schließne kann ohne es abzubrechen
 
 # starten einer tmux session
@@ -109,6 +110,11 @@ Strg + b --> d
 tmux a # enter tmux session
 exit
 
+# schließen einer tmux session von außen
+tmux ls # um die liste der tmuy sessions zu bekommen
+tmux kill-session -t <session-ID> #zB tmux kill-session -t 3
+
+============================== selecting python interpreter ==============================
 # selecting python interpreter
 
 1. activating python environment (venv)
