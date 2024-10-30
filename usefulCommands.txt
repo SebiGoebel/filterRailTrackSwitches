@@ -162,3 +162,14 @@ help command:
 
 command for latency:
 /usr/src/tensorrt/bin/trtexec --onnx=hardy-wildflower-52.onnx --saveEngine=hardy-wildflower-52.engine
+
+
+# ------------------ LaTex ------------------
+
+# .tex file compile
+
+pdflatex -shell-escape Thesis.tex
+
+# referenzen und cites updaten
+
+biber Thesis
