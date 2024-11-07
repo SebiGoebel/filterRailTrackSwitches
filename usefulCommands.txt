@@ -141,7 +141,7 @@ kill -9 <PID-Nummer> # --> zum killen des Prozesses
 python modelInfo.py hardy-wildflower-52 data/egopath.jpg --device cuda:0
 python modelInfo_temporal.py vocal-wildflower-311 data/Video_1.mp4 --start 20 --end 22 --show-crop --device cuda:0
 
-# Zugriff auf Nvidia Jetson
+# Zugriff auf Nvidia Jetson AGX Xavier
 
 1. verbinden mit vpn über openVPN
 2. verbinden mit server:
